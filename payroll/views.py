@@ -2,11 +2,12 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponse
-from django.template.loader import render_to_string
-from weasyprint import HTML
 from .models import Payroll, Payslip
 from .forms import PayrollForm
 from employees.models import Employee
+from xhtml2pdf import pisa
+from django.template.loader import get_template
+from io import BytesIO
 
 def payroll_list(request):
     payrolls = Payroll.objects.all()
@@ -59,14 +60,27 @@ def get_employee_salary(request):
         }
     return JsonResponse(data)
 
+def render_to_pdf(template_src, context_dict):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
 def download_payslip(request, pk):
     payslip = get_object_or_404(Payslip, payroll_id=pk)
-    
-    html_string = render_to_string('payroll/payslip_pdf.html', {'payslip': payslip, 'deductions': payslip.payroll.income_tax + payslip.payroll.social_security + payslip.payroll.other_deductions})
-    
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="payslip_{payslip.payroll.employee.first_name}_{payslip.payroll.date}.pdf"'
-    
-    HTML(string=html_string).write_pdf(response)
-    
-    return response
+    deductions = payslip.payroll.gross_salary - payslip.payroll.net_salary
+    context = {
+        'payslip': payslip,
+        'deductions': deductions,
+    }
+    pdf = render_to_pdf('payroll/payslip_pdf.html', context)
+    if pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = f"payslip_{payslip.payroll.employee.first_name}_{payslip.payroll.date}.pdf"
+        content = f"attachment; filename={filename}"
+        response['Content-Disposition'] = content
+        return response
+    return HttpResponse("Not found")
