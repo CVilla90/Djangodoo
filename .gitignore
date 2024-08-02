@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.so
+db.sqlite3
+
+# Ignore .env file
+.env
+
+# Virtual environment
+.venv/
+env/
+venv/
+.venv/bin
+.venv/lib
+
+# VS Code
+.vscode/
+
+# JetBrains IDEs
+.idea/

@@ -1,0 +1,21 @@
+<!-- Portfolio\Djangodoo\payroll\templates\payroll\payroll_confirm_delete.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Payroll Entry</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/payroll.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Delete Payroll Entry</h1>
+        <p>Are you sure you want to delete the payroll entry for {{ payroll.employee.first_name }} {{ payroll.employee.last_name }} on {{ payroll.date }}?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, delete</button>
+            <a href="{% url 'payroll_list' %}" class="cancel">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

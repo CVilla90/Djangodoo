@@ -1,0 +1,82 @@
+<!-- Portfolio\Djangodoo\templates\home.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-left">
+            <img src="{% static 'images/odoo_logo.png' %}" alt="Odoo Logo" class="logo">
+        </div>
+        <div class="navbar-center">
+            <form method="GET" action="{% url 'home' %}">
+                <input type="text" name="q" placeholder="Search..." value="{{ request.GET.q|default_if_none:'' }}">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div class="navbar-right">
+            <div class="notification-icon">🔔</div>
+            <div class="user-menu">
+                <img src="{% static 'images/user_icon.webp' %}" alt="User Icon">
+                <span>Username</span>
+                <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Apps</h2>
+        <ul>
+            <li><a href="{% url 'home' %}">All</a></li>
+            <li><a href="{% url 'filtered_apps' 'official' %}">Official Apps</a></li>
+            <li><a href="{% url 'filtered_apps' 'other' %}">Other</a></li>
+        </ul>
+        <h2>Categories</h2>
+        <ul>
+            <li><a href="{% url 'home' %}">All</a></li>
+            {% for category in categories %}
+            <li><a href="{% url 'filtered_apps_by_category' category %}">{{ category }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        {% if apps %}
+        <div class="app-grid">
+            {% for app in apps %}
+            <div class="app-card">
+                {% if app.active %}
+                <a href="{{ app.url }}">
+                    <img src="{{ app.icon.url }}" alt="{{ app.name }}">
+                    <h3>{{ app.name }}</h3>
+                </a>
+                {% else %}
+                <div class="disabled-link">
+                    <img src="{{ app.icon.url }}" alt="{{ app.name }}">
+                    <h3>{{ app.name }}</h3>
+                </div>
+                {% endif %}
+                <p>{{ app.description }}</p>
+                {% if app.active %}
+                <button class="deactivate-button" onclick="window.location.href='{% url 'toggle_app_status' app.id %}'">Deactivate</button>
+                {% else %}
+                <button class="activate-button" onclick="window.location.href='{% url 'toggle_app_status' app.id %}'">Activate</button>
+                {% endif %}
+                <button>Learn More</button>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No apps found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!-- Portfolio\Djangodoo\payroll\templates\payroll\payroll_form.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Payroll</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/payroll.css' %}">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $("#id_date").datepicker({
+                dateFormat: "yy-mm-dd"
+            });
+
+            function calculateNetSalary() {
+                const grossSalary = parseFloat($("#id_gross_salary").val()) || 0;
+                const incomeTax = parseFloat($("#id_income_tax").val()) || 0;
+                const socialSecurity = parseFloat($("#id_social_security").val()) || 0;
+                const otherDeductions = parseFloat($("#id_other_deductions").val()) || 0;
+                const netSalary = grossSalary - incomeTax - socialSecurity - otherDeductions;
+                $("#id_net_salary").val(netSalary.toFixed(2));
+            }
+
+            function updateDeductions() {
+                const grossSalary = parseFloat($("#id_gross_salary").val()) || 0;
+                let incomeTax = 0;
+                let socialSecurity = 0;
+
+                if ($("#income_tax_checkbox").is(":checked")) {
+                    incomeTax = grossSalary * 0.2;  // Example: 20% income tax
+                }
+
+                if ($("#social_security_checkbox").is(":checked")) {
+                    socialSecurity = grossSalary * 0.05;  // Example: 5% social security
+                }
+
+                $("#id_income_tax").val(incomeTax.toFixed(2));
+                $("#id_social_security").val(socialSecurity.toFixed(2));
+                calculateNetSalary();
+            }
+
+            $("#income_tax_checkbox, #social_security_checkbox").change(updateDeductions);
+            $("#id_gross_salary, #id_income_tax, #id_social_security, #id_other_deductions").on("input", calculateNetSalary);
+            $("#id_employee").change(function() {
+                const employeeId = $(this).val();
+                if (employeeId) {
+                    $.ajax({
+                        url: "{% url 'get_employee_salary' %}",
+                        data: {
+                            'employee_id': employeeId
+                        },
+                        success: function(data) {
+                            $("#id_gross_salary").val(data.salary);
+                            updateDeductions();
+                        }
+                    });
+                } else {
+                    $("#id_gross_salary").val('');
+                    updateDeductions();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Payroll</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_employee">Employee</label>
+                {{ form.employee }}
+            </div>
+            <div class="form-group">
+                <label for="id_date">Date</label>
+                {{ form.date }}
+            </div>
+            <div class="form-group">
+                <label for="id_gross_salary">Gross Salary</label>
+                {{ form.gross_salary }}
+            </div>
+            <div class="form-group-inline">
+                <label for="income_tax_checkbox">Income Tax</label>
+                <input type="checkbox" id="income_tax_checkbox" class="custom-checkbox">
+            </div>
+            <div class="form-group">
+                {{ form.income_tax }}
+            </div>
+            <div class="form-group-inline">
+                <label for="social_security_checkbox">Social Security</label>
+                <input type="checkbox" id="social_security_checkbox" class="custom-checkbox">
+            </div>
+            <div class="form-group">
+                {{ form.social_security }}
+            </div>
+            <div class="form-group">
+                <label for="id_other_deductions">Other Deductions</label>
+                {{ form.other_deductions }}
+            </div>
+            <div class="form-group">
+                <label for="id_other_description">Other Description</label>
+                {{ form.other_description }}
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+        <a href="{% url 'payroll_list' %}" class="cancel">Cancel</a>
+    </div>
+</body>
+</html>

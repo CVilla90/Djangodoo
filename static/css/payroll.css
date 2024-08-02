@@ -1,0 +1,181 @@
+/* Portfolio\Djangodoo\static\css\payroll.css */
+
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Container Styles */
+.container,
+.payslip-container {
+    width: 80%;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.toolbar {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: white; /* Ensure text color is white */
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-danger {
+    background-color: #c9302c;
+}
+
+.btn-danger:hover {
+    background-color: #ac2925;
+}
+
+.payroll-table,
+.payslip-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.payroll-table th,
+.payroll-table td,
+.payslip-table th,
+.payslip-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.payroll-table th,
+.payslip-table th {
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.payroll-table tbody tr:hover,
+.payslip-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.form-group,
+.form-group-inline {
+    margin-bottom: 20px;
+}
+
+.form-group-inline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.custom-checkbox {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+form button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+form button:hover {
+    background: #0056b3;
+}
+
+a.cancel,
+a.btn {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #fff; /* Ensure text color is white */
+    font-size: 16px;
+}
+
+a.cancel:hover,
+a.btn:hover {
+    text-decoration: underline;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center; /* Ensure buttons are aligned */
+}
+
+.inline-form {
+    display: inline;
+}
+
+/* Payslip Specific Styles */
+.payslip-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.payslip-info {
+    margin-bottom: 20px;
+}
+
+.payslip-table .total-row td,
+.payslip-table .net-salary-row td {
+    font-weight: bold;
+}
+
+.payslip-footer {
+    margin-top: 20px;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}
+
+/* Specific styles for the payslip PDF download */
+.download-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

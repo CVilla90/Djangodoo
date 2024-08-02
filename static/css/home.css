@@ -1,0 +1,108 @@
+/* Portfolio\Djangodoo\static\css\home.css */
+
+/* home.css */
+.sidebar {
+    background-color: #f5f5f5;
+    width: 200px;
+    padding: 20px;
+    position: fixed;
+    top: 50px; /* Adjust this to match the height of the navbar */
+    bottom: 0;
+    z-index: 999;
+    overflow-y: auto;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.main-content {
+    margin-left: 220px;
+    padding: 70px 20px 20px 20px; /* Adjust top padding to match navbar height */
+    flex: 1;
+    overflow-y: auto;
+}
+
+.app-grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.app-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    width: calc(33% - 40px); /* 3 cards per row with 20px padding on each side */
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.app-card img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.app-card h3 {
+    margin: 10px 0;
+}
+
+.activate-button {
+    background-color: #875A7B !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px !important;
+    margin: 5px !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+}
+
+.deactivate-button {
+    background-color: #87CEEB !important; /* Light blue color */
+    color: white !important;
+    border: none !important;
+    padding: 10px !important;
+    margin: 5px !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+}
+
+.activate-button:hover {
+    background-color: #6b465d !important;
+}
+
+.deactivate-button:hover {
+    background-color: #5DADE2 !important; /* Slightly darker light blue on hover */
+}
+
+.app-card button {
+    background-color: #875A7B; /* This will not affect specific buttons due to !important */
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.app-card button:hover {
+    background-color: #6b465d;
+}
+
+.disabled-link {
+    opacity: 0.5; /* Make it look disabled */
+    pointer-events: none; /* Prevent clicking */
+}

@@ -1,0 +1,35 @@
+<!-- Portfolio\Djangodoo\users\templates\users\loging.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <img src="{% static 'images/odoo_logo.png' %}" alt="Odoo Logo" class="logo">
+            <p class="login-message">Special dedication to GTA Telecom.</p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_username">Email</label>
+                    {{ form.username }}
+                </div>
+                <div class="form-group">
+                    <label for="id_password">Password</label>
+                    {{ form.password }}
+                </div>
+                <button type="submit" class="login-button">LOG IN</button>
+            </form>
+            <div class="login-footer">
+                <a href="#">Don't have an account?</a>
+                <a href="#">Reset password</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

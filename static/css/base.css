@@ -1,0 +1,74 @@
+/* Portfolio\Djangodoo\static\css\base.css */
+
+/* base.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.navbar {
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px; /* Add padding to the right and left */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-left .logo {
+    width: 100px;
+}
+
+.navbar-center input {
+    padding: 5px;
+    width: 300px;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    padding-right: 30px; /* Add this line to ensure right padding */
+}
+
+.navbar-right .notification-icon,
+.navbar-right .user-menu {
+    margin-left: 20px;
+}
+
+.navbar-right .user-menu {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right .user-menu img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.navbar-right .user-menu span {
+    margin-right: 10px;
+}
+
+.navbar-right .logout-button {
+    background-color: #875A7B;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.navbar-right .logout-button:hover {
+    background-color: #6b465d;
+}

@@ -1,0 +1,47 @@
+<!-- Portfolio\Djangodoo\employees\templates\employees\employee_list.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee List</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/employees.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Employee List</h1>
+        <div class="toolbar">
+            <a href="{% url 'employee_create' %}" class="btn btn-primary">Add Employee</a>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+        </div>
+        <table class="employee-table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Position</th>
+                    <th>Department</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.first_name }}</td>
+                    <td>{{ employee.last_name }}</td>
+                    <td>{{ employee.position }}</td>
+                    <td>{{ employee.department }}</td>
+                    <td>
+                        <a href="{% url 'employee_edit' employee.pk %}" class="btn btn-secondary">Edit</a>
+                        <form action="{% url 'employee_delete' employee.pk %}" method="post" class="inline-form">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!-- Portfolio\Djangodoo\payroll\templates\payroll\payroll_list.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payroll List</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/payroll.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Payroll List</h1>
+        <div class="toolbar">
+            <a href="{% url 'payroll_create' %}" class="btn btn-primary">Add Payroll Entry</a>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+        </div>
+        <table class="payroll-table">
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Date</th>
+                    <th>Gross Salary</th>
+                    <th>Deductions</th>
+                    <th>Net Salary</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payroll in payrolls %}
+                <tr>
+                    <td>{{ payroll.employee.first_name }} {{ payroll.employee.last_name }}</td>
+                    <td>{{ payroll.date }}</td>
+                    <td>{{ payroll.gross_salary }}</td>
+                    <td>{{ payroll.deductions }}</td>
+                    <td>{{ payroll.net_salary }}</td>
+                    <td class="action-buttons">
+                        <a href="{% url 'payslip_detail' payroll.pk %}" class="btn btn-secondary">View Payslip</a>
+                        <a href="{% url 'download_payslip' payroll.pk %}" class="btn btn-secondary download-btn">
+                            <img src="{% static 'images/download_icon.svg' %}" alt="Download" class="icon">
+                        </a>
+                        <form action="{% url 'payroll_delete' payroll.pk %}" method="post" class="inline-form">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
